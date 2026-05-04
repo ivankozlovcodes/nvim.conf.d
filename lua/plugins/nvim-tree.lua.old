@@ -1,0 +1,86 @@
+return {
+	{
+		"nvim-tree/nvim-tree.lua",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		keys = {
+			{
+				"<leader>e",
+				function()
+					require("nvim-tree.api").tree.toggle({
+						find_file = true,
+						focus = true,
+					})
+				end,
+				desc = "Toggle nvim-tree",
+			},
+		},
+		config = function()
+			local api = require("nvim-tree.api")
+
+			-- Define the function inside config but BEFORE setup
+			local function my_on_attach(bufnr)
+				local function opts(desc)
+					return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+				end
+
+				-- 1. Apply default mappings so we don't lose basic functionality
+				api.config.mappings.default_on_attach(bufnr)
+
+				-- 2. Apply custom overrides
+				-- v = vertical, h = horizontal, t = new tab
+				vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: Vertical Split"))
+				vim.keymap.set("n", "h", api.node.open.horizontal, opts("Open: Horizontal Split"))
+				vim.keymap.set("n", "t", api.node.open.tab, opts("Open: New Tab"))
+
+				-- 3. Optional: Remove the default 's' or '<C-v>' if you want total clean-up
+				vim.keymap.del("n", "<C-t>", { buffer = bufnr })
+			end
+
+			require("nvim-tree").setup({
+				on_attach = my_on_attach, -- CRITICAL: Must be exactly here
+				disable_netrw = true,
+				hijack_netrw = true,
+				update_focused_file = {
+					enable = true,
+				},
+				view = {
+					width = 32,
+					side = "left",
+				},
+				-- Tab sync helps with the persistence we discussed
+				tab = {
+					sync = {
+						open = true,
+						close = true,
+					},
+				},
+			})
+
+			-- Persistence Logic (Ensures tree state follows tab switches)
+			local group = vim.api.nvim_create_augroup("NvimTreePersistence", { clear = true })
+			api.events.subscribe(api.events.Event.TreeOpen, function()
+				_G.NvimTreeOpen = true
+			end)
+			api.events.subscribe(api.events.Event.TreeClose, function()
+				_G.NvimTreeOpen = false
+			end)
+
+			vim.api.nvim_create_autocmd("TabEnter", {
+				group = group,
+				callback = function()
+					vim.schedule(function()
+						if _G.NvimTreeOpen and not api.tree.is_visible() then
+							api.tree.open()
+							api.tree.find_file({ open = true, focus = false })
+							vim.cmd("wincmd l")
+						elseif not _G.NvimTreeOpen and api.tree.is_visible() then
+							api.tree.close()
+						end
+					end)
+				end,
+			})
+		end,
+	},
+}
