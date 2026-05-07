@@ -4,22 +4,20 @@ local M = {}
 vim.g.myconfig_root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h:h:h")
 
 function M.setup()
-	-- Globals
-	vim.g.mapleader = " "
-	vim.g.maplocalleader = " "
-
-	vim.g.clipboard = {
-		name = "wl-clipboard",
-		copy = {
-			["+"] = { "wl-copy", "--trim-newline" },
-			["*"] = { "wl-copy", "--trim-newline" },
-		},
-		paste = {
-			["+"] = { "wl-paste", "--no-newline" },
-			["*"] = { "wl-paste", "--no-newline" },
-		},
-		cache_enabled = 1,
-	}
+	if vim.fn.has("unix") == 1 and vim.env.WAYLAND_DISPLAY then
+		vim.g.clipboard = {
+			name = "wl-clipboard",
+			copy = {
+				["+"] = { "wl-copy", "--trim-newline" },
+				["*"] = { "wl-copy", "--trim-newline" },
+			},
+			paste = {
+				["+"] = { "wl-paste", "--no-newline" },
+				["*"] = { "wl-paste", "--no-newline" },
+			},
+			cache_enabled = 1,
+		}
+	end
 
 	-- Options
 	vim.opt.number = true
@@ -28,8 +26,6 @@ function M.setup()
 	vim.opt.softtabstop = 2
 	vim.opt.shiftwidth = 2
 	vim.opt.expandtab = true
-
-	vim.opt.smartindent = true
 
 	vim.opt.textwidth = 80
 	vim.opt.wrap = false
@@ -45,14 +41,12 @@ function M.setup()
 	vim.opt.termguicolors = true
 
 	vim.opt.scrolloff = 16
-	vim.opt.isfname:append("@-@")
-
 	vim.opt.foldmethod = "expr"
 	vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 	vim.opt.foldtext = ""
 	vim.opt.foldlevel = 99
 
-	vim.opt.updatetime = 20
+	vim.opt.updatetime = 300
 	vim.opt.cmdheight = 0
 	vim.opt.laststatus = 3
 
