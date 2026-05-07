@@ -54,6 +54,34 @@ return {
   },
   -- stylua: ignore start
   keys = {
+    { "<leader>/", function()
+        local items = {}
+        for name in pairs(vim.api.nvim_get_commands({})) do
+          table.insert(items, { text = name, label = "[cmd] " .. name, kind = "command" })
+        end
+        for _, mode in ipairs({ "n", "v", "i" }) do
+          for _, map in ipairs(vim.api.nvim_get_keymap(mode)) do
+            local lhs = map.lhs or ""
+            local desc = map.desc or ""
+            if desc ~= "" or lhs ~= "" then
+              table.insert(items, {
+                text = lhs .. " " .. desc,
+                label = "[" .. mode .. "] " .. lhs .. (desc ~= "" and ("  " .. desc) or ""),
+                kind = "keymap", lhs = lhs, mode = mode,
+              })
+            end
+          end
+        end
+        Snacks.picker.pick({
+          title = "Commands & Keymaps",
+          items = items,
+          format = function(item) return { { item.label } } end,
+          confirm = function(picker, item)
+            picker:close()
+            if item.kind == "command" then vim.cmd(item.text) end
+          end,
+        })
+      end, desc = "Search commands & keymaps" },
     { "<C-S-P>",     function() Snacks.picker.commands() end,                                desc = "Command Palette", nowait = true },
     { "<leader>g/",  function() Snacks.lazygit() end,                                        desc = "Open lazygit" },
     { "<leader>fe",  function() Snacks.picker.files({ dirs = { vim.g.myconfig_root, vim.fn.stdpath("config") } }) end, desc = "Find config file" },

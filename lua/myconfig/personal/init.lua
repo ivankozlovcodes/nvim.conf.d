@@ -82,6 +82,18 @@ function M.setup()
     end,
     desc = "Launch Alpha on empty buffer",
   })
+
+  -- LSP keymaps
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("PersonalLsp", { clear = true }),
+    callback = function(e)
+      local bopts = { buffer = e.buf }
+      vim.keymap.set("n", "<leader>d",  function() vim.lsp.buf.hover() end,          bopts)
+      vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end,  bopts)
+      vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,    bopts)
+      vim.keymap.set("i", "<C-h>",      function() vim.lsp.buf.signature_help() end, bopts)
+    end,
+  })
 end
 
 return M

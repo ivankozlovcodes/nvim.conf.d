@@ -165,10 +165,11 @@ function M.setup()
 	-- Autocmds
 	local augroup = vim.api.nvim_create_augroup
 	local autocmd = vim.api.nvim_create_autocmd
-	local TheJohnnyGroup = augroup("TheJohnny", {})
+	local conform_group = augroup("ConformFormat", { clear = true })
 	local yank_group = augroup("HighlightYank", { clear = true })
 
 	autocmd("BufWritePre", {
+		group = conform_group,
 		callback = function(args)
 			require("conform").format({
 				bufnr = args.buf,
@@ -186,37 +187,6 @@ function M.setup()
 			vim.highlight.on_yank({ higroup = "IncSearch", timeout = 40 })
 		end,
 	})
-
-	autocmd("BufWritePre", {
-		group = TheJohnnyGroup,
-		pattern = "*",
-		desc = "Remove trailing whitespace",
-		command = [[%s/\s\+$//e]],
-	})
-
-	autocmd("LspAttach", {
-		group = TheJohnnyGroup,
-		callback = function(e)
-			local bopts = { buffer = e.buf }
-			vim.keymap.set("n", "<leader>d", function()
-				hoverAndDiagnosticWindow()
-			end, vim.tbl_deep_extend("keep", bopts, { noremap = false, silent = true }))
-			vim.keymap.set("n", "<leader>vd", function()
-				vim.diagnostic.open_float()
-			end, bopts)
-			vim.keymap.set("n", "<leader>ca", function()
-				vim.lsp.buf.code_action()
-			end, bopts)
-			vim.keymap.set("i", "<C-h>", function()
-				vim.lsp.buf.signature_help()
-			end, bopts)
-		end,
-	})
-
-	-- :Remember command
-	vim.api.nvim_create_user_command("Remember", function(o)
-		vim.cmd("filter /" .. o.args .. "/ map")
-	end, { nargs = 1 })
 end
 
 return M
