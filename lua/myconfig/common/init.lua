@@ -58,14 +58,6 @@ function M.setup()
 	local opts = { noremap = true, silent = true }
 
 	vim.keymap.set({ "n", "i", "v" }, "<F1>", "<nop>", { desc = "Disable F1 Help" })
-	vim.keymap.set("n", "<leader><leader>", function()
-		vim.cmd("so")
-	end)
-	vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-
-	-- Clipboard
-	vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
-	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
 
 	-- Replace word under cursor with yanked
 	vim.keymap.set("n", "<leader>r", "ciw<C-r>0<ESC>")
@@ -94,9 +86,6 @@ function M.setup()
 	-- Scroll centered
 	vim.keymap.set("n", "<C-d>", "<C-d>zz")
 	vim.keymap.set("n", "<C-u>", "<C-u>zz")
-
-	-- Window ops via s
-	vim.keymap.set("n", "s", "<C-w>", { desc = "Window operations" })
 
 	-- Tab navigation
 	vim.keymap.set("n", "<C-t>h", "<cmd>tabprevious<cr>", { desc = "Prev Tab" })
@@ -158,22 +147,6 @@ function M.setup()
 	vim.keymap.set("n", "<leader>gk", function()
 		goto_error_then_hint(-1)
 	end)
-
-	-- Quickfix
-	vim.keymap.set("n", "<leader>qfc", function()
-		vim.fn.setqflist({})
-	end, { desc = "Clear quickfix" })
-	vim.keymap.set("n", "<leader>qfe", function()
-		vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR })
-	end, { desc = "Send errors to quickfix" })
-	vim.keymap.set("n", "<leader>qfw", function()
-		vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.WARN })
-	end, { desc = "Send warnings to quickfix" })
-	vim.keymap.set("n", "<leader>qfh", function()
-		vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.HINT })
-	end, { desc = "Send hints to quickfix" })
-	vim.keymap.set("n", "<leader>qc", "<cmd>:cclose<cr>", { desc = "Close quickfix" })
-	vim.keymap.set("n", "<leader>qo", "<cmd>:copen<cr>", { desc = "Open quickfix" })
 
 	-- Buffer management
 	vim.keymap.set("n", "<leader>bb", "<cmd>edit#<cr>", { desc = "Last buffer" })
