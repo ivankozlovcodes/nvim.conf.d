@@ -31,12 +31,12 @@ require("lazy").setup({
 			config = function()
 				require("myconfig.common").setup()
 				require("myconfig.personal").setup()
-				-- require("myconfig.work").setup()
+				-- require("myconfig.goog").setup()
 			end,
 		},
 		{ import = "myconfig.common.plugins" },
 		{ import = "myconfig.personal.plugins" },
-		-- { import = "myconfig.work.plugins" },
+		-- { import = "myconfig.goog.plugins" },
 	},
 	change_detection = { notify = false },
 })
