@@ -54,6 +54,7 @@ return {
   },
   -- stylua: ignore start
   keys = {
+    { "<leader>?",  function() Snacks.picker.help() end, desc = "Search help tags" },
     { "<leader>/", function()
         local items = {}
         for name in pairs(vim.api.nvim_get_commands({})) do
