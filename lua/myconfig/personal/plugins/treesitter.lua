@@ -4,7 +4,6 @@ return {
     lazy = false,
     build = ":TSUpdate",
     config = function()
-      -- 1. Setup and Install
       require("nvim-treesitter").setup()
       local ensure_installed = { "lua", "vim", "vimdoc", "javascript", "markdown", "markdown_inline" }
       require("nvim-treesitter").install(ensure_installed)
@@ -18,36 +17,30 @@ return {
     end,
   },
 
-  -- Sticky Headers (Context)
   {
     "nvim-treesitter/nvim-treesitter-context",
     lazy = false,
     config = function()
       require("treesitter-context").setup({
         enable = true,
-        max_lines = 3, -- How many lines of sticky header to show
-        trim_scope = "outer", -- Clean look for nested functions
+        max_lines = 3,
+        trim_scope = "outer",
       })
     end,
   },
 
-  -- Markdown Rendering (Pretty tables, checkboxes, headers)
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("render-markdown").setup({
-        -- Optional: Disable concealment if you want to see the raw markdown symbols always
-        -- anti_conceal = { enabled = true },
-      })
+      require("render-markdown").setup({})
     end,
   },
 
-  -- Textobjects (af, if, etc.)
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    lazy = false, -- Load immediately so mappings work
+    lazy = false,
     config = function()
       require("nvim-treesitter-textobjects").setup({
         select = {
@@ -62,7 +55,7 @@ return {
         },
         move = {
           enable = true,
-          set_jumps = true, -- Add jumps to the jumplist (use Ctrl-o to go back)
+          set_jumps = true,
           goto_next_start = {
             ["]m"] = "@function.outer",
             ["]]"] = "@class.outer",
