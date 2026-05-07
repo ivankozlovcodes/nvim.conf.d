@@ -5,11 +5,16 @@ return {
 	},
 	opts = {
 		width = 100,
-		buffers = {
-			right = {
-				-- Compensate for line numbers + signcolumn on left (~6 cols)
-				width = 10,
-			},
-		},
 	},
+	config = function(_, opts)
+		require("no-neck-pain").setup(opts)
+		vim.api.nvim_create_autocmd("BufReadPost", {
+			once = true,
+			callback = function()
+				if vim.bo.buftype == "" then
+					vim.cmd("NoNeckPain")
+				end
+			end,
+		})
+	end,
 }
