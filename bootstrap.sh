@@ -28,9 +28,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  dev = { path = "~/git", fallback = true },
   spec = {
     {
       "ivankozlovcodes/nvim.conf.d",
+      dev = true,
       lazy = false,
       priority = 1000,
       config = function()
