@@ -6,6 +6,7 @@ return {
 	},
 	opts = {
 		width = 100,
+		disableOnLastBuffer = true,
 		autocmds = {
 			skipEnteringNoNeckPainBuffer = true,
 		},
