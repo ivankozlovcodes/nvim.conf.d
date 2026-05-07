@@ -7,7 +7,7 @@ function M.setup()
   end, { desc = "Open Fyler View" })
 
   -- Close buffer, fall back to Alpha if last
-  vim.keymap.set("n", "<leader>q", function()
+  vim.keymap.set("n", "<leader>bq", function()
     if vim.bo.modified then
       vim.notify("Unsaved changes. Save first.", vim.log.levels.WARN)
       return
@@ -17,7 +17,7 @@ function M.setup()
     if #buflisted <= 1 then
       vim.cmd("Alpha")
     end
-  end, { desc = "Close saved file or open Alpha" })
+  end, { desc = "Close buffer" })
 
   -- Wipe all buffers → Alpha (block if unsaved)
   local function any_unsaved()

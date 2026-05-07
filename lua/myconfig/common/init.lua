@@ -97,18 +97,18 @@ function M.setup()
 	vim.keymap.set("n", "<A-h>", "<cmd>vertical resize -2<cr>")
 	vim.keymap.set("n", "<A-l>", "<cmd>vertical resize +2<cr>")
 
-	-- Save-all quit
-	vim.keymap.set("n", "<leader>qq", "<cmd>xa<cr>", { desc = "Save all and quit" })
-
 	-- Colorcolumn toggle
-	vim.keymap.set("n", "<leader>cc", function()
+	vim.keymap.set("n", "<leader>tc", function()
 		local current = vim.opt.colorcolumn:get()
 		if vim.tbl_contains(current, "80") then
 			vim.opt.colorcolumn = ""
 		else
 			vim.opt.colorcolumn = "80"
 		end
-	end, { desc = "Toggle colorcolumn=80" })
+	end, { desc = "Toggle colorcolumn" })
+
+	-- Save-all quit
+	vim.keymap.set("n", "<leader>qa", "<cmd>xa<cr>", { desc = "Save all and quit" })
 
 	-- Copy file path
 	vim.keymap.set("n", "<C-g>", function()
@@ -141,12 +141,8 @@ function M.setup()
 		end
 	end
 
-	vim.keymap.set("n", "<leader>lj", function()
-		goto_error_then_hint(1)
-	end, { desc = "Next diagnostic" })
-	vim.keymap.set("n", "<leader>lk", function()
-		goto_error_then_hint(-1)
-	end, { desc = "Prev diagnostic" })
+	vim.keymap.set("n", "<leader>lj", function() goto_error_then_hint(1) end,  { desc = "Next diagnostic" })
+	vim.keymap.set("n", "<leader>lk", function() goto_error_then_hint(-1) end, { desc = "Prev diagnostic" })
 
 	-- Buffer management
 	vim.keymap.set("n", "<leader>bl", "<cmd>edit#<cr>", { desc = "Last buffer" })

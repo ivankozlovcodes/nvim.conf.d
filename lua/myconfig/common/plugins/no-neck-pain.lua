@@ -2,7 +2,7 @@ return {
 	"shortcuts/no-neck-pain.nvim",
 	lazy = false,
 	keys = {
-		{ "<leader>cn", "<cmd>NoNeckPain<cr>", desc = "Toggle centered layout" },
+		{ "<leader>tn", "<cmd>NoNeckPain<cr>", desc = "Toggle centered layout" },
 	},
 	opts = {
 		width = 100,
