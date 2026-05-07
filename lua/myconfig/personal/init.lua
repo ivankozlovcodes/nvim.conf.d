@@ -71,6 +71,11 @@ function M.setup()
       vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end,  bopts)
       vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end,    bopts)
       vim.keymap.set("i", "<C-h>",      function() vim.lsp.buf.signature_help() end, bopts)
+
+      local client = vim.lsp.get_client_by_id(e.data.client_id)
+      if client and client.server_capabilities.documentSymbolProvider then
+        require("nvim-navic").attach(client, e.buf)
+      end
     end,
   })
 end
