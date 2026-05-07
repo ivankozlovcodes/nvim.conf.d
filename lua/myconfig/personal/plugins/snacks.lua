@@ -87,7 +87,7 @@ return {
     { "<leader>g/",  function() Snacks.lazygit() end,                                        desc = "Open lazygit" },
     { "<leader>fe",  function() Snacks.picker.files({ dirs = { vim.g.myconfig_root, vim.fn.stdpath("config") } }) end, desc = "Find config file" },
     { "<leader>ff",  function() Snacks.picker.files() end,                                   desc = "Find Files" },
-    { "<leader>fb",  function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
+    { "<leader>bb",  function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
     { "<leader>fr",  function() Snacks.picker.recent() end,                                  desc = "Recent" },
     { "<leader>:",   function() Snacks.picker.commands() end,                                desc = "Command Palette" },
     { "<leader>z",   function() Snacks.zen() end,                                            desc = "Toggle Zen Mode" },
@@ -102,7 +102,7 @@ return {
     { "gy",          function() Snacks.picker.lsp_type_definitions() end,                    desc = "Goto T[y]pe Definition" },
     { "gai",         function() Snacks.picker.lsp_incoming_calls() end,                      desc = "Calls Incoming" },
     { "gao",         function() Snacks.picker.lsp_outgoing_calls() end,                      desc = "Calls Outgoing" },
-    { "<leader>ss",  function() Snacks.picker.lsp_symbols() end,                             desc = "LSP Symbols" },
+    { "<leader>ls",  function() Snacks.picker.lsp_symbols() end,                             desc = "LSP Symbols" },
     { "<leader>sd",  function()
         if Snacks.dim.enabled then Snacks.dim.disable() else Snacks.dim.enable() end
       end,                                                                                   desc = "Toggle dim" },

@@ -34,7 +34,7 @@ function M.setup()
     return false
   end
 
-  vim.keymap.set("n", "qq", function()
+  vim.keymap.set("n", "<leader>qa", function()
     if any_unsaved() then
       vim.notify("Unsaved changes. Save first.", vim.log.levels.WARN)
       return
@@ -67,9 +67,9 @@ function M.setup()
     group = vim.api.nvim_create_augroup("PersonalLsp", { clear = true }),
     callback = function(e)
       local bopts = { buffer = e.buf }
-      vim.keymap.set("n", "<leader>d",  function() vim.lsp.buf.hover() end,          bopts)
-      vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end,  bopts)
-      vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,    bopts)
+      vim.keymap.set("n", "<leader>lh", function() vim.lsp.buf.hover() end,          bopts)
+      vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end,  bopts)
+      vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end,    bopts)
       vim.keymap.set("i", "<C-h>",      function() vim.lsp.buf.signature_help() end, bopts)
     end,
   })

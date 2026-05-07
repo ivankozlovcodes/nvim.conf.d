@@ -141,15 +141,15 @@ function M.setup()
 		end
 	end
 
-	vim.keymap.set("n", "<leader>gj", function()
+	vim.keymap.set("n", "<leader>lj", function()
 		goto_error_then_hint(1)
-	end)
-	vim.keymap.set("n", "<leader>gk", function()
+	end, { desc = "Next diagnostic" })
+	vim.keymap.set("n", "<leader>lk", function()
 		goto_error_then_hint(-1)
-	end)
+	end, { desc = "Prev diagnostic" })
 
 	-- Buffer management
-	vim.keymap.set("n", "<leader>bb", "<cmd>edit#<cr>", { desc = "Last buffer" })
+	vim.keymap.set("n", "<leader>bl", "<cmd>edit#<cr>", { desc = "Last buffer" })
 	vim.keymap.set("n", "<leader>bd", function()
 		local current = vim.fn.bufnr()
 		local closed = 0
