@@ -1,5 +1,8 @@
 local M = {}
 
+-- Repo root: used by keymaps to open config files regardless of where lazy installed it
+vim.g.myconfig_root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h:h:h")
+
 function M.setup()
 	-- Globals
 	vim.g.mapleader = " "
