@@ -171,6 +171,21 @@ function M.setup()
 		vim.notify("Closed " .. closed .. " buffer(s)")
 	end, { desc = "Close all buffers except current" })
 
+	-- Warn on non-ASCII keypress in normal mode (wrong keyboard layout)
+	local last_layout_warn = 0
+	vim.on_key(function(key)
+		if vim.fn.mode() ~= "n" then return end
+		local b = string.byte(key, 1)
+		if not b or b == 27 then return end
+		if b >= 0xC2 and #key >= 2 then
+			local now = vim.uv.now()
+			if now - last_layout_warn > 200 then
+				last_layout_warn = now
+				vim.notify("Wrong keyboard layout", vim.log.levels.WARN)
+			end
+		end
+	end)
+
 	-- Autocmds
 	local augroup = vim.api.nvim_create_augroup
 	local autocmd = vim.api.nvim_create_autocmd
