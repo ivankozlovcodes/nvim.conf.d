@@ -1,27 +1,10 @@
 local M = {}
 
 function M.setup()
-  -- Keymaps that depend on personal plugins (Alpha, Fyler, Rest, Jqit)
-
   -- Fyler
   vim.keymap.set("n", "<leader>e", function()
     require("fyler").toggle({ kind = "float" })
   end, { desc = "Open Fyler View" })
-
-  -- Close tab windows except NvimTree
-  vim.keymap.set("n", "<leader>tc", function()
-    local current_tab = vim.api.nvim_get_current_tabpage()
-    local wins = vim.api.nvim_tabpage_list_wins(current_tab)
-    for _, win in ipairs(wins) do
-      local buf = vim.api.nvim_win_get_buf(win)
-      local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-      if ft ~= "NvimTree" then
-        if #vim.api.nvim_tabpage_list_wins(current_tab) > 1 then
-          vim.api.nvim_win_close(win, false)
-        end
-      end
-    end
-  end, { desc = "Close all editors in current tab" })
 
   -- Close buffer, fall back to Alpha if last
   vim.keymap.set("n", "<leader>q", function()
@@ -59,10 +42,6 @@ function M.setup()
     vim.cmd("silent! %bdelete")
     vim.cmd("Alpha")
   end, { desc = "Close all, fallback to Alpha" })
-
-  -- Rest / Jqit (tool-specific)
-  vim.keymap.set("n", "<leader>xr", "<cmd>Rest run<cr>")
-  vim.keymap.set("v", "<leader>jq", "<cmd>Jqit<cr>")
 
   -- Alpha fallback: open Alpha when last buffer is empty
   vim.api.nvim_create_autocmd("BufEnter", {
