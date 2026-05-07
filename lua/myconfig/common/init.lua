@@ -1,7 +1,7 @@
 local M = {}
 
 -- Repo root: used by keymaps to open config files regardless of where lazy installed it
-vim.g.myconfig_root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h:h:h")
+vim.g.myconfig_root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h:h:h:h")
 
 function M.setup()
 	if vim.fn.has("unix") == 1 and vim.env.WAYLAND_DISPLAY then
@@ -58,6 +58,7 @@ function M.setup()
 	local opts = { noremap = true, silent = true }
 
 	vim.keymap.set({ "n", "i", "v" }, "<F1>", "<nop>", { desc = "Disable F1 Help" })
+	vim.keymap.set("n", "q:", "<nop>", { desc = "Disable command-line window" })
 
 	-- Window navigation
 	vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Window left" })
