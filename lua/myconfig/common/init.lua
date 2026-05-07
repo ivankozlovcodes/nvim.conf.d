@@ -59,6 +59,12 @@ function M.setup()
 
 	vim.keymap.set({ "n", "i", "v" }, "<F1>", "<nop>", { desc = "Disable F1 Help" })
 
+	-- Window navigation
+	vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Window left" })
+	vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Window down" })
+	vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Window up" })
+	vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Window right" })
+
 	-- Replace word under cursor with yanked
 	vim.keymap.set("n", "<leader>r", "ciw<C-r>0<ESC>")
 	vim.keymap.set("v", "<leader>r", "c<C-r>0<ESC>")
