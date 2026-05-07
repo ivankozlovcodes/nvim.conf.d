@@ -6,18 +6,6 @@ function M.setup()
     require("fyler").toggle({ kind = "float" })
   end, { desc = "Open Fyler View" })
 
-  -- Close buffer, fall back to Alpha if last
-  vim.keymap.set("n", "<leader>bq", function()
-    if vim.bo.modified then
-      vim.notify("Unsaved changes. Save first.", vim.log.levels.WARN)
-      return
-    end
-    local buflisted = vim.fn.getbufinfo({ buflisted = 1 })
-    vim.cmd("bdelete")
-    if #buflisted <= 1 then
-      vim.cmd("Alpha")
-    end
-  end, { desc = "Close buffer" })
 
   -- Wipe all buffers → Alpha (block if unsaved)
   local function any_unsaved()
@@ -62,22 +50,6 @@ function M.setup()
     desc = "Launch Alpha on empty buffer",
   })
 
-  -- LSP keymaps
-  vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("PersonalLsp", { clear = true }),
-    callback = function(e)
-      local bopts = { buffer = e.buf }
-      vim.keymap.set("n", "<leader>lh", function() vim.lsp.buf.hover() end,          bopts)
-      vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end,  bopts)
-      vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end,    bopts)
-      vim.keymap.set("i", "<C-h>",      function() vim.lsp.buf.signature_help() end, bopts)
-
-      local client = vim.lsp.get_client_by_id(e.data.client_id)
-      if client and client.server_capabilities.documentSymbolProvider then
-        require("nvim-navic").attach(client, e.buf)
-      end
-    end,
-  })
 end
 
 return M

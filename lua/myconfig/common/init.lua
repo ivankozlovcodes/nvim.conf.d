@@ -151,6 +151,13 @@ function M.setup()
 	vim.keymap.set("n", "<leader>lk", function() goto_error_then_hint(-1) end, { desc = "Prev diagnostic" })
 
 	-- Buffer management
+	vim.keymap.set("n", "<leader>bq", function()
+		if vim.bo.modified then
+			vim.notify("Unsaved changes. Save first.", vim.log.levels.WARN)
+			return
+		end
+		vim.cmd("bdelete")
+	end, { desc = "Close buffer" })
 	vim.keymap.set("n", "<leader>bl", "<cmd>edit#<cr>", { desc = "Last buffer" })
 	vim.keymap.set("n", "<leader>bd", function()
 		local current = vim.fn.bufnr()
@@ -178,6 +185,22 @@ function M.setup()
 				lsp_fallback = true,
 				stop_after_first = false,
 			})
+		end,
+	})
+
+	autocmd("LspAttach", {
+		group = augroup("CommonLsp", { clear = true }),
+		callback = function(e)
+			local bopts = { buffer = e.buf }
+			vim.keymap.set("n", "<leader>lh", function() vim.lsp.buf.hover() end,          bopts)
+			vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end,  bopts)
+			vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end,    bopts)
+			vim.keymap.set("i", "<C-h>",      function() vim.lsp.buf.signature_help() end, bopts)
+
+			local client = vim.lsp.get_client_by_id(e.data.client_id)
+			if client and client.server_capabilities.documentSymbolProvider then
+				require("nvim-navic").attach(client, e.buf)
+			end
 		end,
 	})
 
