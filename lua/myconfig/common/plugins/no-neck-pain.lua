@@ -6,6 +6,9 @@ return {
 	},
 	opts = {
 		width = 100,
+		autocmds = {
+			skipEnteringNoNeckPainBuffer = true,
+		},
 	},
 	config = function(_, opts)
 		require("no-neck-pain").setup(opts)
