@@ -56,7 +56,7 @@ return {
   keys = {
     { "<C-S-P>",     function() Snacks.picker.commands() end,                                desc = "Command Palette", nowait = true },
     { "<leader>g/",  function() Snacks.lazygit() end,                                        desc = "Open lazygit" },
-    { "<leader>fe",  function() Snacks.picker.files({ cwd = vim.g.myconfig_root }) end,      desc = "Find config file" },
+    { "<leader>fe",  function() Snacks.picker.files({ dirs = { vim.g.myconfig_root, vim.fn.stdpath("config") } }) end, desc = "Find config file" },
     { "<leader>ff",  function() Snacks.picker.files() end,                                   desc = "Find Files" },
     { "<leader>fb",  function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
     { "<leader>fr",  function() Snacks.picker.recent() end,                                  desc = "Recent" },
