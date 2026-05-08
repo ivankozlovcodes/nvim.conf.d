@@ -1,57 +1,56 @@
 return {
-  "folke/snacks.nvim",
-  priority = 1000,
-  lazy = false,
-  opts = {
-    bigfile = { enabled = true },
-    dashboard = { enabled = false },
-    explorer = { enabled = false },
-    indent = { enabled = false },
-    input = { enabled = false },
-    picker = {
-      enabled = true,
-      matcher = {
-        frecency = true,
-        cwd_bonus = true,
-        ignorecase = true,
-        fuzzy = true,
-      },
-      ui_select = true,
-      win = {
-        input = {
-          keys = {
-            ["v"] = { "edit_vsplit", mode = { "n" } },
-            ["h"] = { "edit_split", mode = { "n" } },
-            ["t"] = { "edit_tab", mode = { "n" } },
-            ["<Esc>"] = { "close", mode = { "n" } },
-          },
-        },
-      },
-    },
-    quickfile = { enabled = false },
-    notifier = { enabled = false },
-    scope = { enabled = false },
-    statuscolumn = { enabled = false },
-    words = { enabled = false },
-    rename = { enabled = true },
-    zen = { enabled = true },
-    gh = { enabled = false },
-    lazygit = { enabled = true },
-    dim = {
-      enabled = true,
-      animate = {
-        enabled = vim.fn.has("nvim-0.10") == 1,
-        easing = "outQuad",
-        duration = { step = 20, total = 300 },
-      },
-      scope = { min_size = 5, max_size = 20, siblings = true },
-      filter = function(buf)
-        return vim.g.snacks_dim ~= false
-          and vim.b[buf].snacks_dim ~= false
-          and vim.bo[buf].buftype == ""
-      end,
-    },
-  },
+	"folke/snacks.nvim",
+	priority = 1000,
+	lazy = false,
+	opts = {
+		bigfile = { enabled = true },
+		dashboard = { enabled = false },
+		explorer = { enabled = false },
+		indent = { enabled = false },
+		input = { enabled = false },
+		picker = {
+			enabled = true,
+			matcher = {
+				frecency = true,
+				cwd_bonus = true,
+				ignorecase = true,
+				fuzzy = true,
+			},
+			ui_select = true,
+			win = {
+				input = {
+					keys = {
+						["v"] = { "edit_vsplit", mode = { "n" } },
+						["h"] = { "edit_split", mode = { "n" } },
+						["t"] = { "edit_tab", mode = { "n" } },
+						["<Esc>"] = { "close", mode = { "n" } },
+					},
+				},
+			},
+		},
+		quickfile = { enabled = false },
+		notifier = { enabled = false },
+		scope = { enabled = false },
+		statuscolumn = { enabled = false },
+		words = { enabled = false },
+		rename = { enabled = true },
+		terminal = { enabled = true },
+		zen = { enabled = true },
+		gh = { enabled = false },
+		lazygit = { enabled = true },
+		dim = {
+			enabled = true,
+			animate = {
+				enabled = vim.fn.has("nvim-0.10") == 1,
+				easing = "outQuad",
+				duration = { step = 20, total = 300 },
+			},
+			scope = { min_size = 5, max_size = 20, siblings = true },
+			filter = function(buf)
+				return vim.g.snacks_dim ~= false and vim.b[buf].snacks_dim ~= false and vim.bo[buf].buftype == ""
+			end,
+		},
+	},
   -- stylua: ignore start
   keys = {
     { "<leader>?",  function() Snacks.picker.help() end, desc = "Search help tags" },
@@ -106,8 +105,8 @@ return {
         if Snacks.dim.enabled then Snacks.dim.disable() else Snacks.dim.enable() end
       end,                                                                                   desc = "Toggle dim" },
   },
-  -- stylua: ignore end
-  config = function(_, opts)
-    require("snacks").setup(opts)
-  end,
+	-- stylua: ignore end
+	config = function(_, opts)
+		require("snacks").setup(opts)
+	end,
 }
