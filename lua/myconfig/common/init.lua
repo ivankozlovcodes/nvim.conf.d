@@ -77,6 +77,8 @@ function M.setup()
 	-- Search
 	vim.keymap.set("n", "<Esc>", "<Esc>:noh<cr>", opts)
 	vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+	-- Highlight then <leader>r to replace all occurrences in file
+	vim.keymap.set("v", "<leader>r", [["hy:%s/<C-r>h//gc<left><left><left>]])
 	vim.keymap.set("x", "z/", "<C-\\><C-n>`</\\%V", { desc = "Search forward within visual selection" })
 	vim.keymap.set("x", "z?", "<C-\\><C-n>`>?\\%V", { desc = "Search backward within visual selection" })
 
@@ -148,8 +150,12 @@ function M.setup()
 		end
 	end
 
-	vim.keymap.set("n", "<leader>lj", function() goto_error_then_hint(1) end,  { desc = "Next diagnostic" })
-	vim.keymap.set("n", "<leader>lk", function() goto_error_then_hint(-1) end, { desc = "Prev diagnostic" })
+	vim.keymap.set("n", "<leader>lj", function()
+		goto_error_then_hint(1)
+	end, { desc = "Next diagnostic" })
+	vim.keymap.set("n", "<leader>lk", function()
+		goto_error_then_hint(-1)
+	end, { desc = "Prev diagnostic" })
 
 	-- Buffer management
 	vim.keymap.set("n", "<leader>bq", function()
@@ -175,9 +181,13 @@ function M.setup()
 	-- Warn on non-ASCII keypress in normal mode (wrong keyboard layout)
 	local last_layout_warn = 0
 	vim.on_key(function(key)
-		if vim.fn.mode() ~= "n" then return end
+		if vim.fn.mode() ~= "n" then
+			return
+		end
 		local b = string.byte(key, 1)
-		if not b or b == 27 then return end
+		if not b or b == 27 then
+			return
+		end
 		if b >= 0xC2 and #key >= 2 then
 			local now = vim.uv.now()
 			if now - last_layout_warn > 200 then
@@ -208,10 +218,18 @@ function M.setup()
 		group = augroup("CommonLsp", { clear = true }),
 		callback = function(e)
 			local bopts = { buffer = e.buf }
-			vim.keymap.set("n", "<leader>lh", function() vim.lsp.buf.hover() end,          bopts)
-			vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end,  bopts)
-			vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end,    bopts)
-			vim.keymap.set("i", "<C-h>",      function() vim.lsp.buf.signature_help() end, bopts)
+			vim.keymap.set("n", "<leader>lh", function()
+				vim.lsp.buf.hover()
+			end, bopts)
+			vim.keymap.set("n", "<leader>ld", function()
+				vim.diagnostic.open_float()
+			end, bopts)
+			vim.keymap.set("n", "<leader>la", function()
+				vim.lsp.buf.code_action()
+			end, bopts)
+			vim.keymap.set("i", "<C-h>", function()
+				vim.lsp.buf.signature_help()
+			end, bopts)
 
 			local client = vim.lsp.get_client_by_id(e.data.client_id)
 			if client and client.server_capabilities.documentSymbolProvider then
