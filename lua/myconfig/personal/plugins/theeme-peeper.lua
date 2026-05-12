@@ -21,6 +21,7 @@ return {
 	opts = {
 		picker = "snacks",
 		previewer = "float",
+		persist = true,
 
 		preview = {
 			profile = "code",
