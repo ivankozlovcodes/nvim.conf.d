@@ -84,7 +84,7 @@ return {
       end, desc = "Search commands & keymaps" },
     { "<leader>gg",  function() Snacks.lazygit() end,                                        desc = "Open lazygit" },
     { "<leader>fe",  function() Snacks.picker.files({ dirs = { vim.g.myconfig_root, vim.fn.stdpath("config") } }) end, desc = "Find config file" },
-    { "<leader>ff",  function() Snacks.picker.files() end,                                   desc = "Find Files" },
+    { "<leader>ff",  function() Snacks.picker.files({ hidden = true }) end,                                   desc = "Find Files" },
     { "<leader>bb",  function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
     { "<leader>fr",  function() Snacks.picker.recent() end,                                  desc = "Recent" },
     { "<leader>:",   function() Snacks.picker.commands() end,                                desc = "Command Palette" },
