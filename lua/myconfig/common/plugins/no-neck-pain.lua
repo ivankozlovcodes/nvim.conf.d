@@ -2,7 +2,7 @@ return {
 	"shortcuts/no-neck-pain.nvim",
 	lazy = false,
 	keys = {
-		{ "<leader>tn", "<cmd>NoNeckPain<cr>", desc = "Toggle centered layout" },
+		{ "<leader>tN", "<cmd>NoNeckPain<cr>", desc = "Toggle centered layout" },
 	},
 	opts = {
 		width = 100,
@@ -26,7 +26,9 @@ return {
 		vim.api.nvim_create_autocmd("VimEnter", {
 			group = group,
 			once = true,
-			callback = function() vim.schedule(try_enable) end,
+			callback = function()
+				vim.schedule(try_enable)
+			end,
 		})
 
 		vim.api.nvim_create_autocmd("BufEnter", {

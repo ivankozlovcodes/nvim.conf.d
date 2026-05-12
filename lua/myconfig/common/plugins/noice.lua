@@ -2,10 +2,9 @@ return {
 	{
 		"rcarriga/nvim-notify",
 		opts = {
-			merge_duplicates = false,
-			top_down = false,
+			merge_duplicates = true,
 			render = "minimal",
-			timeout = 1200,
+			timeout = 3000,
 		},
 		config = function(_, opts)
 			local actual_stage = vim.g.neovide and "slide" or "static"
@@ -15,14 +14,6 @@ return {
 				background_colour = bg_color and string.format("#%06x", bg_color) or "#000000",
 			})
 			require("notify").setup(opts)
-			vim.api.nvim_create_autocmd("ColorScheme", {
-				callback = function()
-					local bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
-					require("notify").setup({
-						background_colour = bg and string.format("#%06x", bg) or "#000000",
-					})
-				end,
-			})
 			vim.notify = require("notify")
 		end,
 	},
@@ -78,5 +69,21 @@ return {
 				},
 			})
 		end,
+		keys = {
+			{
+				"<leader>tn",
+				function()
+					for _, win in ipairs(vim.api.nvim_list_wins()) do
+						local buf = vim.api.nvim_win_get_buf(win)
+						if vim.bo[buf].filetype == "noice" then
+							vim.api.nvim_win_close(win, false)
+							return
+						end
+					end
+					require("noice").cmd("history")
+				end,
+				desc = "Toggle notifications window",
+			},
+		},
 	},
 }
