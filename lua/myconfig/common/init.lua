@@ -116,6 +116,18 @@ function M.setup()
 		end
 	end, { desc = "Toggle colorcolumn" })
 
+	-- Toggle warnings only
+	local warnings_on = true
+	vim.keymap.set('n', '<leader>tW', function()
+		warnings_on = not warnings_on
+		vim.diagnostic.config({
+			underline = { severity = { min = warnings_on and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR } },
+			virtual_text = { severity = { min = warnings_on and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR } },
+			signs = { severity = { min = warnings_on and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR } },
+		})
+		vim.notify("Warnings " .. (warnings_on and "on" or "off"))
+	end, { desc = "Toggle warnings only" })
+
 	-- Save-all quit
 	vim.keymap.set("n", "<leader>qa", "<cmd>xa<cr>", { desc = "Save all and quit" })
 
