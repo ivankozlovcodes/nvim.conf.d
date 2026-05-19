@@ -116,6 +116,18 @@ function M.setup()
 		end
 	end, { desc = "Toggle colorcolumn" })
 
+	-- Toggle warnings only
+	local warnings_on = true
+	vim.keymap.set('n', '<leader>tW', function()
+		warnings_on = not warnings_on
+		vim.diagnostic.config({
+			underline = { severity = { min = warnings_on and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR } },
+			virtual_text = { severity = { min = warnings_on and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR } },
+			signs = { severity = { min = warnings_on and vim.diagnostic.severity.WARN or vim.diagnostic.severity.ERROR } },
+		})
+		vim.notify("Warnings " .. (warnings_on and "on" or "off"))
+	end, { desc = "Toggle warnings only" })
+
 	-- Save-all quit
 	vim.keymap.set("n", "<leader>qa", "<cmd>xa<cr>", { desc = "Save all and quit" })
 
@@ -221,7 +233,7 @@ function M.setup()
 			vim.keymap.set("n", "<leader>lh", function()
 				vim.lsp.buf.hover()
 			end, bopts)
-			vim.keymap.set("n", "<leader>ld", function()
+			vim.keymap.set("n", "<leader>le", function()
 				vim.diagnostic.open_float()
 			end, bopts)
 			vim.keymap.set("n", "<leader>la", function()
@@ -230,6 +242,8 @@ function M.setup()
 			vim.keymap.set("i", "<C-h>", function()
 				vim.lsp.buf.signature_help()
 			end, bopts)
+			vim.keymap.set("n", "<leader>ln", "]m", { buffer = e.buf, remap = true, desc = "Next symbol/method" })
+			vim.keymap.set("n", "<leader>lb", "[m", { buffer = e.buf, remap = true, desc = "Prev symbol/method" })
 
 			local client = vim.lsp.get_client_by_id(e.data.client_id)
 			if client and client.server_capabilities.documentSymbolProvider then
