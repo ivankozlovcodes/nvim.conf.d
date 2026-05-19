@@ -22,6 +22,9 @@ The configuration is modular and workspace-aware, allowing switching between dif
 - **Google Core**: `~/git/nvgoog` (Shared Google-specific configuration)
 - **Nvim Home**: `~/.config/nvim` (Bootstrap and entry point)
 
+### Keymap Philosophy
+Your keymap philosophy is mapped out in detail in [keymap_philosophy.md](file:///usr/local/google/home/ivankozlov/git/nvim.conf.d/.agents/keymap_philosophy.md). Always consult this document before proposing, editing, or adding any new keymaps. Respect the semantic prefixes (e.g., `s` for Search, `g` for VCS/Google, `t` for Toggles) and follow the VCS unification design pattern.
+
 ---
 
 ## Agent Commands
