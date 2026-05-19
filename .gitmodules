@@ -1,3 +1,0 @@
-[submodule "lua/myconfig/goog"]
-	path = lua/myconfig/goog
-	url = sso://user/ivankozlov/nvim.goog.d
