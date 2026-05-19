@@ -13,7 +13,7 @@ return {
     },
     opts = {
       options = {
-        theme = "catppuccin",
+        theme = "auto",
         globalstatus = true,
         disabled_filetypes = {
           winbar = { "alpha", "no-neck-pain" },
