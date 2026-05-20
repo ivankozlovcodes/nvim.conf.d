@@ -76,6 +76,15 @@ Used for path operations.
 *   `<leader>pw` -> Copy workspace-relative path of current file.
 *   `<leader>fd` -> `cd` to current file's directory.
 
+### 8. `n` → Notes / Obsidian
+Used for Markdown/Obsidian notes management (via `obsidian.nvim` in `common` setup).
+*   `<leader>nn` -> Create a new note (`:ObsidianNew`).
+*   `<leader>ns` -> Search vault for tags or text (`:ObsidianSearch`).
+*   `<leader>nb` -> View backlinks for the current note (`:ObsidianBacklinks`).
+*   `<leader>nc` -> Toggle checklist items inside Markdown buffers.
+
+*Note on `<leader>o`*: The `<leader>o` mapping is globally reserved for **Lspsaga Outline** (`:Lspsaga outline`), which is why the Notes group uses the `n` prefix to avoid conflict.
+
 ---
 
 ## VS Code Compatibility
