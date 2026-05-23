@@ -28,6 +28,7 @@ This document summarizes the established keymap conventions and environmental de
 
 ### Core Ergonomics
 - `<leader>bb`: Switch to Last Buffer.
+- `<leader>bk`: Backup current buffer (creates `<file>.bak`).
 - `<leader>e`: Toggle File Explorer (Fyler).
 - `<leader>cc`: Toggle Color Column (80).
 - `<leader>qa`: Wipe all buffers and fallback to Alpha dashboard.

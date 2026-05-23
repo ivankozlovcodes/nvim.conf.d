@@ -45,6 +45,7 @@ This prefix serves two distinct semantic groups depending on the context:
     *   `<leader>bq` -> Close current buffer.
     *   `<leader>bl` -> Switch to last buffer.
     *   `<leader>bd` -> Close all buffers except current.
+    *   `<leader>bk` -> Backup current buffer (creates `<file>.bak`).
 
 ### 4. `l` → LSP & Diagnostics
 Used for Language Server Protocol and code diagnostics.

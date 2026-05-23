@@ -190,6 +190,33 @@ function M.setup()
 		vim.notify("Closed " .. closed .. " buffer(s)")
 	end, { desc = "Close all buffers except current" })
 
+	-- Buffer backup
+	local function backup_current_buffer()
+		if not vim.bo.modifiable then
+			vim.notify("Buffer is not modifiable", vim.log.levels.WARN)
+			return
+		end
+		if vim.bo.buftype ~= "" then
+			vim.notify("Not a normal buffer", vim.log.levels.WARN)
+			return
+		end
+		local filepath = vim.fn.expand("%:p")
+		if filepath == "" then
+			vim.notify("Buffer has no file name", vim.log.levels.WARN)
+			return
+		end
+
+		local bakpath = filepath .. ".bak"
+		local escaped_bakpath = vim.fn.fnameescape(bakpath)
+		local ok, err = pcall(vim.cmd, "write! " .. escaped_bakpath)
+		if ok then
+			vim.notify("Backup created: " .. vim.fn.fnamemodify(bakpath, ":t"), vim.log.levels.INFO)
+		else
+			vim.notify("Failed to create backup: " .. tostring(err), vim.log.levels.ERROR)
+		end
+	end
+	vim.keymap.set("n", "<leader>bk", backup_current_buffer, { desc = "Backup current buffer" })
+
 	-- Warn on non-ASCII keypress in normal mode (wrong keyboard layout)
 	local last_layout_warn = 0
 	vim.on_key(function(key)
