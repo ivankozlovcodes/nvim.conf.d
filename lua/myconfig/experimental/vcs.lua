@@ -136,6 +136,39 @@ function M.setup()
       vim.notify("No active VCS detected in current workspace.", vim.log.levels.WARN)
     end
   end, { desc = "VCS Sync / Push" })
+
+  -- 5. Unified VCS Hunk Navigation (Mnemonic: j/k for vertical, g for VCS)
+  vim.keymap.set("n", "<leader>gj", function()
+    if vim.wo.diff then
+      vim.cmd("normal! ]c")
+    else
+      local vcs = get_vcs_type()
+      if vcs == "git" then
+        local ok, gs = pcall(require, "gitsigns")
+        if ok then
+          gs.nav_hunk("next")
+        end
+      else
+        vim.notify("Hunk navigation not supported in normal buffers for this VCS.", vim.log.levels.WARN)
+      end
+    end
+  end, { desc = "VCS Next Hunk" })
+
+  vim.keymap.set("n", "<leader>gk", function()
+    if vim.wo.diff then
+      vim.cmd("normal! [c")
+    else
+      local vcs = get_vcs_type()
+      if vcs == "git" then
+        local ok, gs = pcall(require, "gitsigns")
+        if ok then
+          gs.nav_hunk("prev")
+        end
+      else
+        vim.notify("Hunk navigation not supported in normal buffers for this VCS.", vim.log.levels.WARN)
+      end
+    end
+  end, { desc = "VCS Prev Hunk" })
 end
 
 -- Automatically run setup on load

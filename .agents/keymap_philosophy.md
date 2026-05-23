@@ -31,6 +31,8 @@ Used for Version Control System (Git/Hg/JJ/P4) operations and Google-specific in
 *   `<leader>gb` -> Unified VCS Diff (Entire local stack vs Upstream Base).
 *   `<leader>gc` -> Unified VCS Commit / Describe.
 *   `<leader>gp` -> Unified VCS Sync / Push.
+*   `<leader>gj` -> Unified VCS Next Hunk (Git via Gitsigns, Native in Diff).
+*   `<leader>gk` -> Unified VCS Prev Hunk (Git via Gitsigns, Native in Diff).
 *   `<leader>gt` / `<leader>ga` -> Google Terms comment integration (goog-terms.nvim).
 
 ### 3. `b` → Blaze & Buffers (Dual Purpose)
